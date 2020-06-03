@@ -21,13 +21,13 @@ class HashTable:
     """
 
     def __init__(self, capacity):
-        if capacity is None:
+        if capacity is None or capacity < 8:
             self.capacity = 8
         else:
             self.capacity = capacity
-            
-        self.table = [None for i in range(self.capacity)]
-        # print(self.table)
+
+        self.data = [None for i in range(self.capacity)]
+        # print(self.data)
         # print(self.capacity)
 
 
@@ -42,8 +42,10 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        return len(self.table)
-    
+        return self.capacity
+
+    # print(get_num_slots)
+        
 
     def get_load_factor(self):
         """
@@ -94,8 +96,9 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        slot = self.get(key)
-        self.table[slot] = value
+        slot = self.hash_index(key)
+        # self.data[slot] = HashTableEntry(key,value)
+        self.data[slot] = value
 
     def delete(self, key):
         """
@@ -106,8 +109,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        slot = self.get(key)
-        self.table[slot] = None
+        slot = self.hash_index(key)
+        self.data[slot] = None
 
 
     def get(self, key):
@@ -119,8 +122,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        hash_val = self.djb2(key)
-        return hash_val % self.capacity
+        hash_index = self.hash_index(key)
+        return self.data[hash_index]
+        # hash_val = self.djb2(key)
+        # slot = self.hash_index(key)
+        # slot = hash_val % self.capacity
+        # return self.data[slot]
 
 
     def resize(self, new_capacity):
