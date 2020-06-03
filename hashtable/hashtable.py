@@ -129,9 +129,29 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # slot = self.hash_index(key)
+        # self.data[slot] = None
+        
+        #second day
         slot = self.hash_index(key)
-        self.data[slot] = None
+        if slot is None:
+            print('A Warning :D')
+        elif self.data[slot].key == key:
+            self.data[slot] = self.data[slot].next
+        else:
+            cur = self.data[slot]
+            while cur.next.key != key:
+                cur = cur.next
+            
+            cur.next = cur.next.next
 
+
+        #     cur = self.data[slot]
+
+        #     while cur.next.key != key:
+        #         cur = cur.next
+            
+        #     cur.next = 
 
     def get(self, key):
         """
@@ -147,7 +167,7 @@ class HashTable:
 
         # second day
         slot = self.hash_index(key)
-        if slot is None:
+        if self.data[slot] is None:
             return None
         else:
             cur = self.data[slot]
