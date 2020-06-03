@@ -11,7 +11,6 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
-
 class HashTable:
     """
     A hash table that with `capacity` buckets
@@ -29,6 +28,8 @@ class HashTable:
         self.data = [None for i in range(self.capacity)]
         # print(self.data)
         # print(self.capacity)
+        # second day code
+        # self.head = None
 
 
     def get_num_slots(self):
@@ -96,9 +97,28 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # slot = self.hash_index(key)
+        # self.data[slot] = value
+        # Day 2
         slot = self.hash_index(key)
-        # self.data[slot] = HashTableEntry(key,value)
-        self.data[slot] = value
+        node = HashTableEntry(key,value)
+        if self.data[slot] is None:
+            self.data[slot] = node
+        else:
+            cur = self.data[slot]
+            node.next = cur
+            self.data[slot] = node
+
+        # slot = self.hash_index(HashTableEntry[key])
+        # if self.data[slot] is None:
+        #     self.data[slot] = HashTableEntry[value]
+        # else:
+        #     cur = self.data[slot]
+
+        #     while self.data[slot].next is not None:
+        #         cur = cur.next
+            
+        #     cur.next = HashTableEntry[value]
 
     def delete(self, key):
         """
@@ -122,12 +142,22 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        hash_index = self.hash_index(key)
-        return self.data[hash_index]
-        # hash_val = self.djb2(key)
-        # slot = self.hash_index(key)
-        # slot = hash_val % self.capacity
-        # return self.data[slot]
+        # hash_index = self.hash_index(key)
+        # return self.data[hash_index]
+
+        # second day
+        slot = self.hash_index(key)
+        if slot is None:
+            return None
+        else:
+            cur = self.data[slot]
+            
+            while cur.key != key:
+                cur = cur.next
+            
+            return cur.value
+        
+        return None
 
 
     def resize(self, new_capacity):
