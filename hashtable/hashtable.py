@@ -55,6 +55,13 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        count = 0
+        for node in self.data:
+            while node.next is not None:
+                node = node.next
+                count += 1
+        
+        return count / self.capacity
 
 
     def fnv1(self, key):
@@ -188,6 +195,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        
 
 
 
