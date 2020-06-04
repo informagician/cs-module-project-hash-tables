@@ -1,5 +1,20 @@
 def no_dups(s):
     # Your code here
+    string = s.split()
+    print(string)
+    cache = []
+    for w in string:
+        if w not in cache:
+            cache.append(w)
+    print(cache)
+    new_str = ''
+    for w in cache:
+        new_str += w
+        new_str += " "
+    
+    final = new_str[:-1]
+    print(final)
+    return(final)
 
 
 
