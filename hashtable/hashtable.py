@@ -11,7 +11,6 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
-
 class HashTable:
     """
     A hash table that with `capacity` buckets
@@ -21,7 +20,16 @@ class HashTable:
     """
 
     def __init__(self, capacity):
-        # Your code here
+        if capacity is None or capacity < 8:
+            self.capacity = 8
+        else:
+            self.capacity = capacity
+
+        self.data = [None for i in range(self.capacity)]
+        # print(self.data)
+        # print(self.capacity)
+        # second day code
+        # self.head = None
 
 
     def get_num_slots(self):
@@ -35,7 +43,10 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        return self.capacity
 
+    # print(get_num_slots)
+        
 
     def get_load_factor(self):
         """
@@ -44,6 +55,13 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        count = 0
+        for node in self.data:
+            while node.next is not None:
+                node = node.next
+                count += 1
+        
+        return count / self.capacity
 
 
     def fnv1(self, key):
@@ -63,6 +81,10 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
+        hash = 5381
+        for x in key:
+            hash = (( hash << 5) + hash) + ord(x)
+        return hash & 0xFFFFFFFF
 
 
     def hash_index(self, key):
@@ -82,7 +104,28 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # slot = self.hash_index(key)
+        # self.data[slot] = value
+        # Day 2
+        slot = self.hash_index(key)
+        node = HashTableEntry(key,value)
+        if self.data[slot] is None:
+            self.data[slot] = node
+        else:
+            cur = self.data[slot]
+            node.next = cur
+            self.data[slot] = node
 
+        # slot = self.hash_index(HashTableEntry[key])
+        # if self.data[slot] is None:
+        #     self.data[slot] = HashTableEntry[value]
+        # else:
+        #     cur = self.data[slot]
+
+        #     while self.data[slot].next is not None:
+        #         cur = cur.next
+            
+        #     cur.next = HashTableEntry[value]
 
     def delete(self, key):
         """
@@ -93,7 +136,29 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # slot = self.hash_index(key)
+        # self.data[slot] = None
+        
+        #second day
+        slot = self.hash_index(key)
+        if slot is None:
+            print('A Warning :D')
+        elif self.data[slot].key == key:
+            self.data[slot] = self.data[slot].next
+        else:
+            cur = self.data[slot]
+            while cur.next.key != key:
+                cur = cur.next
+            
+            cur.next = cur.next.next
 
+
+        #     cur = self.data[slot]
+
+        #     while cur.next.key != key:
+        #         cur = cur.next
+            
+        #     cur.next = 
 
     def get(self, key):
         """
@@ -104,6 +169,22 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # hash_index = self.hash_index(key)
+        # return self.data[hash_index]
+
+        # second day
+        slot = self.hash_index(key)
+        if self.data[slot] is None:
+            return None
+        else:
+            cur = self.data[slot]
+            
+            while cur.key != key:
+                cur = cur.next
+            
+            return cur.value
+        
+        return None
 
 
     def resize(self, new_capacity):
@@ -114,6 +195,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        
 
 
 
